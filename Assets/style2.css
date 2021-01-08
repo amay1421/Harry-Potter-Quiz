@@ -126,3 +126,8 @@ background-color: maroon;
     bottom: 60px;
     height:150px;
 }
+
+h2 {
+    position:relative;
+    bottom:37px;
+}

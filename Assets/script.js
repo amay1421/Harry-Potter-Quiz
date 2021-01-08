@@ -1,15 +1,17 @@
 var startButton = document.getElementById('start-btn')
-var nextButton = document.getElementById('next-btn')
 
 var questionContainerElement = document.getElementById
 ('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
+var endScreenElement = document.getElementById('game-over')
 
 var mixQuestions, currentQuestionIndex
 var mixAnswers, currentQuestionIndex
 
-var count = localStorage
+var count = 0;
+timeLeft= 80;
+console.log(count);
 
 var timeLeft = parseInt(document.getElementById('time').textContent);
 
@@ -29,7 +31,7 @@ var questions = [
            {text: 'Seeker', correct: true},
            {text: 'Chaser', correct: false},
            {text: 'Beater', correct: false},
-           {text: 'Keeper', correct: false}
+           {text: 'Keepr', correct: false}
        ]
     },
     {
@@ -83,20 +85,41 @@ startButton.addEventListener('click', startGame);
 
 function startGame () {
 
-setInterval(() => {
+var timeInterval = setInterval(() => {
     timeLeft--;
     document.getElementById('time').textContent = timeLeft;
 }, 1000);
-    if (timeLeft === 0) {
-        console.log("game over"); 
-        wordDisplay.textContent = "Game Over"
-        clearInterval('time')
-    }
+if (time <= 0) {
+    clearInterval(timeLeft = 0);
+    winGame();
+}
+
+    // if (timeLeft === 0) {
+    //     console.log("game over"); 
+    //     wordDisplay.textContent = "Game Over"
+    //     clearInterval(timeInterval)
+    // }
+    // var startingTime = 1;
+    // let time = startingTime * 60;
+    // var gameTimeEl = document.getElementById('time');
+    // // undefined declaration
+    // var timer;
+    // function countdownTime() {
+    //     const minutes = Math.floor(time / 60);
+    //     let seconds = time % 60;
+    //     gameTimeEl.innerHTML = seconds;
+    //     time--;
+    //     if (time <= 0) {
+    //             time=0;
+    //             clearInterval(timer);
+    //             // winGame();
+    //         }
+    // }
+
 
 startButton.classList.add('hide')
 mixQuestions = questions.sort(() => Math.random() - .5)
 
-console.log(mixQuestions)
 currentQuestionIndex = 0
 questionContainerElement.classList.remove('hide')
 setNextQuestion()
@@ -135,13 +158,19 @@ function selectAnswer(e) {
     Array.from(answerButtonsElement.children).forEach(button => {
         setQuestionClass(button, button.dataset.correct)
     })
+    if (mixQuestions.length > currentQuestionIndex + 1 ) {
+        showQuestion
+    } else {
+        questionContainerElement.classList.add('hide')
+        endScreenElement.classList.remove('hide')
+        clearInterval();
+    }
+    if(correct) { count++
 
-    if(correct) {
-       
     } else {
         timeLeft = timeLeft - 15;
-    }
-
+    } 
+   
     currentQuestionIndex++;
 
     setTimeout(setNextQuestion, 1000);
@@ -162,12 +191,23 @@ function clearQuestionClass(element) {
 }
 
 
-startButton.addEventListener("click", function (event) {
-    event.preventDefault();
 
-    var AnswerData = {
 
-    }
-})
 
-localStorage.setItem("AnswerData", JSON.stringify(AnswerData));
+
+// var nameInput = document.querySelector("#name");
+// var scoreInput = document.querySelector("score");
+// var submitButton = document.querySelector("#submit");
+
+// var count = localStorage
+
+
+// startButton.addEventListener("click", function (event) {
+//     event.preventDefault();
+
+//     var AnswerData = {
+
+//     }
+// })
+
+// localStorage.setItem("AnswerData", JSON.stringify(AnswerData));
