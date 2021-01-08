@@ -4,6 +4,6 @@ This is a Harry Potter Quiz challenge that will test your knowledge on the Harry
 
 ![Harry Potter Quiz Screenshot](./hp-quiz.png)
 
-<strong> Deployed Link:</strong>
+<strong> Deployed Link:</strong> https://amay1421.github.io/Harry-Potter-Quiz/
 <br>
 <strong>Repo Link:</strong> https://github.com/amay1421/Harry-Potter-Quiz
