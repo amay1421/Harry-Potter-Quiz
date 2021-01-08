@@ -10,8 +10,6 @@ var mixQuestions, currentQuestionIndex
 var mixAnswers, currentQuestionIndex
 
 var count = 0;
-timeLeft= 80;
-console.log(count);
 
 var timeLeft = parseInt(document.getElementById('time').textContent);
 
@@ -89,16 +87,14 @@ var timeInterval = setInterval(() => {
     timeLeft--;
     document.getElementById('time').textContent = timeLeft;
 }, 1000);
-if (time <= 0) {
-    clearInterval(timeLeft = 0);
-    winGame();
-}
-
     // if (timeLeft === 0) {
     //     console.log("game over"); 
     //     wordDisplay.textContent = "Game Over"
     //     clearInterval(timeInterval)
     // }
+
+    console.log(timeLeft);
+
     // var startingTime = 1;
     // let time = startingTime * 60;
     // var gameTimeEl = document.getElementById('time');
@@ -168,9 +164,14 @@ function selectAnswer(e) {
     if(correct) { count++
 
     } else {
-        timeLeft = timeLeft - 15;
+        timeLeft = timeLeft - 15; 
     } 
-   
+    if (timeLeft < 0) {
+        questionContainerElement.classList.add('hide')
+        endScreenElement.classList.remove('hide')
+        clearInterval();
+    }
+    
     currentQuestionIndex++;
 
     setTimeout(setNextQuestion, 1000);
@@ -189,9 +190,6 @@ function clearQuestionClass(element) {
     element.classList.remove('remove')
 
 }
-
-
-
 
 
 
