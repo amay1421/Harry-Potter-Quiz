@@ -29,7 +29,7 @@ var questions = [
            {text: 'Seeker', correct: true},
            {text: 'Chaser', correct: false},
            {text: 'Beater', correct: false},
-           {text: 'Keepr', correct: false}
+           {text: 'Keeper', correct: false}
        ]
     },
     {
@@ -157,7 +157,7 @@ function setQuestionClass(element, correct) {
 }
 
 function clearQuestionClass(element) {
-    element.classList.remove('renove')
+    element.classList.remove('remove')
 
 }
 

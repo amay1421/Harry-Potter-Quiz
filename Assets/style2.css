@@ -12,17 +12,20 @@ h1 {
     font-stretch: expanded;
     font-weight: bold;
     position: relative;
-    bottom: 40px;
+    bottom: 10px;
     text-align: center;
-    background-color: gold;
+    border-bottom: 1px solid black;
 }
 
 p { 
-    font-size: 23px;
-    color:whitesmoke;
+    font-size: 17px;
+    color:black;
     position:relative;
-    bottom: 30px;
+    top: 15px;
     text-align: center;
+    font-weight: bold;
+    text-align: left;
+    font-style: cursive;
 }
 
 .starting-page {
@@ -72,18 +75,16 @@ background-color: maroon;
 }
 
 .btn.correct {
-    /* --hue: var(--hue-correct); */
     background-color: green;
 }
 
 .btn.wrong {
-    /*--hue: var(--hue-wrong);*/
     background-color: red;
 
 }
 
-.start-btn .next-btn{
-    font-size: 3rem;
+.start-btn {
+    font-size: 30px;
     font-weight: bold;
     padding: 10px 15px;
 }
@@ -98,19 +99,6 @@ background-color: maroon;
 .hide {
     display:none;
 }
-/* 
-.scores {
-    align-items: left;
-    position:relative;
-    right: 535px;
-    height: 600px;
-    font-size: 18px;
-}
-
-#timer {
-    position:relative;
-    left: 500px;
-} */
 
 .upper-left {
     position:absolute;
@@ -124,4 +112,17 @@ background-color: maroon;
 
 .outer-container {
     margin: 20px;
+}
+
+.question {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.starting-page {
+    background-color: gold;
+    max-width:900px;
+    position:relative;
+    bottom: 60px;
+    height:150px;
 }
