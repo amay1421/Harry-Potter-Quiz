@@ -5,19 +5,24 @@
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-:root {
-    --hue-wrong: 0;
-    --hue-correct: 145;
-}
-
 h1 {
-    color: maroon;
-    text-shadow: black;
+    color: black;
+    font-size: 50px;
+    text-shadow: rgba(255, 255, 255, 0.527);
     font-stretch: expanded;
+    font-weight: bold;
+    position: relative;
+    bottom: 40px;
+    text-align: center;
+    background-color: gold;
 }
 
 p { 
-    font-size: 20;
+    font-size: 23px;
+    color:whitesmoke;
+    position:relative;
+    bottom: 30px;
+    text-align: center;
 }
 
 .starting-page {
@@ -33,7 +38,7 @@ width: 100vw;
 height: 100vh;
 justify-content: center;
 align-items: center;
-background-color: grey;
+background-color: maroon;
 }
 
 .container {
@@ -43,7 +48,6 @@ background-color: grey;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px 2px;
-
 }
 
 .btn-grid {
@@ -113,6 +117,9 @@ background-color: grey;
     left: 0px;
     top: 0px;
     margin: 10px;
+    color: black;
+    font-weight: bold;
+    background-color:gold;
 }
 
 .outer-container {

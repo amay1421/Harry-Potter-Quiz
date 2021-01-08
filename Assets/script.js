@@ -6,7 +6,10 @@ var questionContainerElement = document.getElementById
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 
-let mixQuestions, currentQuestionIndex
+var mixQuestions, currentQuestionIndex
+var mixAnswers, currentQuestionIndex
+
+var count = localStorage
 
 var timeLeft = parseInt(document.getElementById('time').textContent);
 
@@ -84,6 +87,11 @@ setInterval(() => {
     timeLeft--;
     document.getElementById('time').textContent = timeLeft;
 }, 1000);
+    if (timeLeft === 0) {
+        console.log("game over"); 
+        wordDisplay.textContent = "Game Over"
+        clearInterval('time')
+    }
 
 startButton.classList.add('hide')
 mixQuestions = questions.sort(() => Math.random() - .5)
@@ -95,7 +103,6 @@ setNextQuestion()
 }
 
 function setNextQuestion(){
-    console.log('Next Question!')
     resetState()
     showQuestion(mixQuestions[currentQuestionIndex])
 }
@@ -124,9 +131,9 @@ function resetState() {
 function selectAnswer(e) {
     var selectedButton   = e.target
     var correct = selectedButton.dataset.correct
-    setStatusClass(document.body, correct)
+    setQuestionClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
+        setQuestionClass(button, button.dataset.correct)
     })
 
     if(correct) {
@@ -135,20 +142,13 @@ function selectAnswer(e) {
         timeLeft = timeLeft - 15;
     }
 
-    /*if (mixQuestions.length > currentQuestionIndex + 1 ) {
-        //nextButton.classList.remove('hide')
-    } else {
-        //startButton.innerText = 'Restart'
-        //startButton.classList.remove('hide')
-    }*/
     currentQuestionIndex++;
 
-
-    setTimeout(setNextQuestion, 3000);
+    setTimeout(setNextQuestion, 1000);
 }
 
-function setStatusClass(element, correct) {
-    clearStatusClass(element)
+function setQuestionClass(element, correct) {
+    clearQuestionClass(element)
     if (correct) {
         element.classList.add('correct')
     } else {
@@ -156,24 +156,18 @@ function setStatusClass(element, correct) {
     }
 }
 
-function clearStatusClass(element) {
+function clearQuestionClass(element) {
     element.classList.remove('renove')
 
 }
 
 
+startButton.addEventListener("click", function (event) {
+    event.preventDefault();
 
-// startButton.addEventListener("click", function (e) {
-//     e.preventDefault();
-//     // alert("working")
-//     var timer = 10;
-//     var timerid = setInterval(function () {
-//         timer--;
-//         // console.log(timerCount);
-//         timerDisplay.textContent = timer;
-//         if (timer === 0) {
-//             // console.log("game over");
-//             wordDisplay.textContent = "Game Over"
-//             clearInterval(timerId);
-//         }
-//     }, 1000);
+    var AnswerData = {
+
+    }
+})
+
+localStorage.setItem("AnswerData", JSON.stringify(AnswerData));
