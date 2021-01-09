@@ -10,6 +10,19 @@ var mixQuestions, currentQuestionIndex
 var mixAnswers, currentQuestionIndex
 
 var count = 0;
+// let quizTime = 80;
+// let timer;
+
+// function seTimer(){
+//     timer=setInterval(function(){
+//         quizTime --;
+//         if (quizTime<=0){
+//             quizTime=0;
+//             timerSpan.textContent="Time's up!";
+//             clearInterval(timer);
+//         }
+//     })
+
 
 var timeLeft = parseInt(document.getElementById('time').textContent);
 
@@ -79,6 +92,7 @@ var questions = [
     }
    ]
 
+
 startButton.addEventListener('click', startGame); 
 
 function startGame () {
@@ -87,11 +101,11 @@ var timeInterval = setInterval(() => {
     timeLeft--;
     document.getElementById('time').textContent = timeLeft;
 }, 1000);
-    // if (timeLeft === 0) {
-    //     console.log("game over"); 
-    //     wordDisplay.textContent = "Game Over"
-    //     clearInterval(timeInterval)
-    // }
+    if (timeLeft === 0) {
+        console.log("game over"); 
+        wordDisplay.textContent = "Game Over"
+        clearInterval(timeInterval)
+    }
 
     console.log(timeLeft);
 
