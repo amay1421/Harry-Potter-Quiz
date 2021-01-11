@@ -87,6 +87,7 @@ background-color: maroon;
     font-size: 30px;
     font-weight: bold;
     padding: 10px 15px;
+
 }
 
 .controls {
@@ -130,4 +131,10 @@ background-color: maroon;
 h2 {
     position:relative;
     bottom:37px;
+}
+
+.end-screen {
+    background-color: gold;
+    font-size: 30px;
+    font-weight: bold;
 }

@@ -1,48 +1,36 @@
 var startButton = document.getElementById('start-btn')
-
 var questionContainerElement = document.getElementById
 ('question-container')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 var endScreenElement = document.getElementById('game-over')
+var timeLeft = parseInt(document.getElementById('time').textContent);
 
 var mixQuestions, currentQuestionIndex
 var mixAnswers, currentQuestionIndex
 
 var count = 0;
-// let quizTime = 80;
-// let timer;
+let quizTime = 80;
+let timer;
 
-// function seTimer(){
-//     timer=setInterval(function(){
-//         quizTime --;
-//         if (quizTime<=0){
-//             quizTime=0;
-//             timerSpan.textContent="Time's up!";
-//             clearInterval(timer);
-//         }
-//     })
-
-
-var timeLeft = parseInt(document.getElementById('time').textContent);
 
 var questions = [
     {
         question: 'What house was Harry Potter sorted into?',
         answers: [
-            {text: 'Gryffindor', correct: true},
             {text: 'Hufflepuff', correct: false},
             {text: 'Ravenclaw', correct: false},
-            {text: 'Slytherin', correct: false}
+            {text: 'Slytherin', correct: false},
+            {text: 'Gryffindor', correct: true},
         ]
     },
     {
        question: 'What is Harry’s position on the Quidditch team?',
        answers: [
-           {text: 'Seeker', correct: true},
            {text: 'Chaser', correct: false},
+           {text: 'Seeker', correct: true},
            {text: 'Beater', correct: false},
-           {text: 'Keepr', correct: false}
+           {text: 'Keeper', correct: false}
        ]
     },
     {
@@ -57,9 +45,9 @@ var questions = [
     {
        question: 'How do you close the Marauder’s Map?',
        answers: [
-           {text: '“Mischief managed”', correct: true},
            {text: '“I promise to create mischief”', correct: false},
            {text: '“I’m ready to make trouble”', correct: false},
+           {text: '“Mischief managed”', correct: true},
            {text: '“I solemnly swear I am up to no good”', correct: false}
        ]
     },
@@ -75,10 +63,11 @@ var questions = [
     {
        question: 'Ron Weasley had a phobia of what?',
        answers: [
-           {text: 'Spiders', correct: true},
            {text: 'Snakes', correct: false},
            {text: 'Bats', correct: false},
-           {text: 'Dragons', correct: false}
+           {text: 'Dragons', correct: false},
+           {text: 'Spiders', correct: true},
+
        ]
     },
     {
@@ -92,39 +81,45 @@ var questions = [
     }
    ]
 
+   function setTimer(){
+    var timeId=setInterval(function() {
+        quizTime--;
+        time.textContent= quizTime;
+        if (quizTime<=0){
+            quizTime=0;
+            time.textContent="Time's up!";
+            clearInterval(timeId);
+        }
+    },1000)
+}
+
 
 startButton.addEventListener('click', startGame); 
 
 function startGame () {
+    setTimer();
+// function seTimer(){
+//     timer=setInterval(function(){
+//         quizTime --;
+//         if (quizTime<=0){
+//             quizTime=0;
+//             timerSpan.textContent="Time's up!";
+//             clearInterval(timer);
+//         }
+//     }, 1000)
+// }
 
-var timeInterval = setInterval(() => {
-    timeLeft--;
-    document.getElementById('time').textContent = timeLeft;
-}, 1000);
-    if (timeLeft === 0) {
-        console.log("game over"); 
-        wordDisplay.textContent = "Game Over"
-        clearInterval(timeInterval)
-    }
+// var timeInterval = setInterval(() => {
+//     timeLeft--;
+//     document.getElementById('time').textContent = timeLeft;
+// }, 1000);
+//     if (timeLeft === 0) {
+//         console.log("game over"); 
+//         wordDisplay.textContent = "Game Over"
+//         clearInterval(timeInterval)
+//     }
 
     console.log(timeLeft);
-
-    // var startingTime = 1;
-    // let time = startingTime * 60;
-    // var gameTimeEl = document.getElementById('time');
-    // // undefined declaration
-    // var timer;
-    // function countdownTime() {
-    //     const minutes = Math.floor(time / 60);
-    //     let seconds = time % 60;
-    //     gameTimeEl.innerHTML = seconds;
-    //     time--;
-    //     if (time <= 0) {
-    //             time=0;
-    //             clearInterval(timer);
-    //             // winGame();
-    //         }
-    // }
 
 
 startButton.classList.add('hide')
@@ -171,25 +166,75 @@ function selectAnswer(e) {
     if (mixQuestions.length > currentQuestionIndex + 1 ) {
         showQuestion
     } else {
-        questionContainerElement.classList.add('hide')
-        endScreenElement.classList.remove('hide')
-        clearInterval();
+      endGame();
     }
     if(correct) { count++
 
     } else {
-        timeLeft = timeLeft - 15; 
+        quizTime = quizTime - 15; 
     } 
-    if (timeLeft < 0) {
-        questionContainerElement.classList.add('hide')
-        endScreenElement.classList.remove('hide')
-        clearInterval();
+    if (quizTime < 0) {
+        endGame();
     }
     
     currentQuestionIndex++;
 
     setTimeout(setNextQuestion, 1000);
 }
+
+function endGame() {
+    questionContainerElement.classList.add('hide');
+    endScreenElement.classList.remove('hide');
+    clearInterval();
+    endScreenElement.innerHTML = "Game Over! Score: " + quizTime;
+
+    var instructions = document.createElement("p");
+    instructions.textContent="Submit your high score!"
+
+    var nameInput = document.createElement("input");
+    nameInput.placeholder="name";
+    nameInput.setAttribute("id", "name");
+
+    var submitBtn = document.createElement("button");
+    submitBtn.textContent="Submit!";
+    submitBtn.addEventListener("click", submitScore);
+    
+    endScreenElement.append(instructions);
+    endScreenElement.append(nameInput);
+    // endScreenElement.append(submitBtn);
+}
+// function submitScore(){
+//     var scoreArr = JSON.parse(localStorage.getItem("highscores"));
+//     var newScore = {
+//         name: document.getElementById("name").value,
+//         score: quizTime
+//     }
+//     if(scoreArr){
+//         scoreArr.push(newScore);
+//     } else {
+//         scoreArr=[newScore];
+//     }
+//     localStorage.setItem("highscores", JSON.stringify(scoreArr));
+//     displayHighscores();
+// }
+
+// function displayHighscores(){
+//     let scoreArr = JSON.parse(localStorage.getItem("highscores"));
+//     answersDiv.innerHTML="";
+//     if(scoreArr.length>1){
+//         scoreArr.sort((a, b) => (a.score < b.score) ? 1 : -1);
+//     }
+//     for(let i=0; i<scoreArr.length; i++){
+//         var newP = document.createElement("p");
+//         newP.textContent=scoreArr[i].name+": "+scoreArr[i].score;
+//         answersDiv.append(newP);
+//     }
+
+//     const replayBtn = document.createElement("button");
+//     replayBtn.textContent="Replay?"
+//     replayBtn.addEventListener("click", startQuiz);
+//     answersDiv.append(replayBtn);
+// }
 
 function setQuestionClass(element, correct) {
     clearQuestionClass(element)
@@ -207,6 +252,10 @@ function clearQuestionClass(element) {
 
 
 
+// function sumbitScore() {
+
+// }
+
 // var nameInput = document.querySelector("#name");
 // var scoreInput = document.querySelector("score");
 // var submitButton = document.querySelector("#submit");
@@ -223,3 +272,4 @@ function clearQuestionClass(element) {
 // })
 
 // localStorage.setItem("AnswerData", JSON.stringify(AnswerData));
+
