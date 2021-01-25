@@ -215,11 +215,15 @@ function viewHighscores(){
     questionContainerElement.classList.add('hide');
     endScreenElement.classList.remove('hide');
     endScreenElement.innerHTML="";
-    {
+    if(scoreArr.length>1){
+        scoreArr.sort((a, b) => (a.score - b.score) ? true : false);
+    }
+    for(let i=0; i<scoreArr.length; i++){
         var HighScoreP = document.createElement("p");
         HighScoreP.textContent=scoreArr[i].name+": "+scoreArr[i].score;
         endScreenElement.append(HighScoreP);
     }
+
     var redoButton = document.createElement("button");
     redoButton.textContent="Try Again?"
     redoButton.addEventListener("click", function (){
