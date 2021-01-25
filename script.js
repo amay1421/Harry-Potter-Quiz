@@ -1,6 +1,6 @@
 var startButton = document.getElementById('start-btn')
-var questionContainerElement = document.getElementById
-('question-container')
+var questionContainerElement = document.getElementById('question-container')
+var questionBoxElement = document.getElementById('questionBox')
 var questionElement = document.getElementById('question')
 var answerButtonsElement = document.getElementById('answer-buttons')
 var endScreenElement = document.getElementById('game-over')
@@ -12,7 +12,7 @@ var mixAnswers, currentQuestionIndex
 var count = 0;
 let quizTime = 80;
 let timer;
-
+var timeId = "";
 
 var questions = [
     {
@@ -82,7 +82,7 @@ var questions = [
    ]
 
    function setTimer(){
-    var timeId=setInterval(function() {
+    timeId=setInterval(function() {
         quizTime--;
         time.textContent= quizTime;
         if (quizTime<=0){
@@ -98,29 +98,6 @@ startButton.addEventListener('click', startGame);
 
 function startGame () {
     setTimer();
-// function seTimer(){
-//     timer=setInterval(function(){
-//         quizTime --;
-//         if (quizTime<=0){
-//             quizTime=0;
-//             timerSpan.textContent="Time's up!";
-//             clearInterval(timer);
-//         }
-//     }, 1000)
-// }
-
-// var timeInterval = setInterval(() => {
-//     timeLeft--;
-//     document.getElementById('time').textContent = timeLeft;
-// }, 1000);
-//     if (timeLeft === 0) {
-//         console.log("game over"); 
-//         wordDisplay.textContent = "Game Over"
-//         clearInterval(timeInterval)
-//     }
-
-    console.log(timeLeft);
-
 
 startButton.classList.add('hide')
 mixQuestions = questions.sort(() => Math.random() - .5)
@@ -163,78 +140,62 @@ function selectAnswer(e) {
     Array.from(answerButtonsElement.children).forEach(button => {
         setQuestionClass(button, button.dataset.correct)
     })
-    if (mixQuestions.length > currentQuestionIndex + 1 ) {
-        showQuestion
-    } else {
-      endGame();
-    }
     if(correct) { count++
 
-    } else {
-        quizTime = quizTime - 15; 
+    } else { 
+        if (quizTime-15 < 0) {
+            quizTime = 0
+        } else {
+            quizTime = quizTime - 15; 
+        } 
     } 
     if (quizTime < 0) {
         endGame();
     }
-    
+    if (mixQuestions.length > currentQuestionIndex + 1 && quizTime > 0) {
+        console.log(quizTime) 
+        showQuestion
+     } else {
+       endGame();
+     }
     currentQuestionIndex++;
 
     setTimeout(setNextQuestion, 1000);
 }
 
 function endGame() {
-    questionContainerElement.classList.add('hide');
+    questionBoxElement.classList.add('hide');
     endScreenElement.classList.remove('hide');
-    clearInterval();
+    clearInterval(timeId);
+    time.textContent =  "Game Over";
     endScreenElement.innerHTML = "Game Over! Score: " + quizTime;
 
-    var instructions = document.createElement("p");
-    instructions.textContent="Submit your high score!"
-
+    var gameOverSubmission = document.createElement("p");
+    gameOverSubmission.textContent="Submit your Highscore!"
     var nameInput = document.createElement("input");
-    nameInput.placeholder="name";
+    nameInput.setAttribute("placeholder", "First Name");
     nameInput.setAttribute("id", "name");
-
-    var submitBtn = document.createElement("button");
-    submitBtn.textContent="Submit!";
-    submitBtn.addEventListener("click", submitScore);
-    
-    endScreenElement.append(instructions);
+    var submitButton = document.createElement("button");
+    submitButton.textContent="Submit!";
+    submitButton.addEventListener("click", scoreSubmission);
+    endScreenElement.append(gameOverSubmission);
     endScreenElement.append(nameInput);
-    // endScreenElement.append(submitBtn);
+    endScreenElement.append(submitButton);
 }
-// function submitScore(){
-//     var scoreArr = JSON.parse(localStorage.getItem("highscores"));
-//     var newScore = {
-//         name: document.getElementById("name").value,
-//         score: quizTime
-//     }
-//     if(scoreArr){
-//         scoreArr.push(newScore);
-//     } else {
-//         scoreArr=[newScore];
-//     }
-//     localStorage.setItem("highscores", JSON.stringify(scoreArr));
-//     displayHighscores();
-// }
-
-// function displayHighscores(){
-//     let scoreArr = JSON.parse(localStorage.getItem("highscores"));
-//     answersDiv.innerHTML="";
-//     if(scoreArr.length>1){
-//         scoreArr.sort((a, b) => (a.score < b.score) ? 1 : -1);
-//     }
-//     for(let i=0; i<scoreArr.length; i++){
-//         var newP = document.createElement("p");
-//         newP.textContent=scoreArr[i].name+": "+scoreArr[i].score;
-//         answersDiv.append(newP);
-//     }
-
-//     const replayBtn = document.createElement("button");
-//     replayBtn.textContent="Replay?"
-//     replayBtn.addEventListener("click", startQuiz);
-//     answersDiv.append(replayBtn);
-// }
+function scoreSubmission(){
+    var scoreArr = JSON.parse(localStorage.getItem("Highscores"));
+    var addScore = {
+        name: document.getElementById("name").value,
+        score: quizTime
+    }
+    if(scoreArr){
+        scoreArr.push(addScore);
+    } else {
+        scoreArr=[addScore];
+    }
+    localStorage.setItem("Highscores", JSON.stringify(scoreArr));
+    viewHighscores();
+}
 
 function setQuestionClass(element, correct) {
     clearQuestionClass(element)
@@ -249,27 +210,24 @@ function clearQuestionClass(element) {
     element.classList.remove('remove')
 
 }
+function viewHighscores(){
+    let scoreArr = JSON.parse(localStorage.getItem("Highscores"));
+    questionContainerElement.classList.add('hide');
+    endScreenElement.classList.remove('hide');
+    endScreenElement.innerHTML="";
+    {
+        var HighScoreP = document.createElement("p");
+        HighScoreP.textContent=scoreArr[i].name+": "+scoreArr[i].score;
+        endScreenElement.append(HighScoreP);
+    }
+    var redoButton = document.createElement("button");
+    redoButton.textContent="Try Again?"
+    redoButton.addEventListener("click", function (){
+        location.reload()
+    });
+    endScreenElement.append(redoButton);
+}
+console.log(document.getElementById("Highscores"))
+document.getElementById("Highscores").addEventListener("click", viewHighscores)
 
-
-
-// function sumbitScore() {
-
-// }
-
-// var nameInput = document.querySelector("#name");
-// var scoreInput = document.querySelector("score");
-// var submitButton = document.querySelector("#submit");
-
-// var count = localStorage
-
-
-// startButton.addEventListener("click", function (event) {
-//     event.preventDefault();
-
-//     var AnswerData = {
-
-//     }
-// })
-
-// localStorage.setItem("AnswerData", JSON.stringify(AnswerData));
 
