@@ -176,7 +176,7 @@ function endGame() {
     nameInput.setAttribute("placeholder", "First Name");
     nameInput.setAttribute("id", "name");
     var submitButton = document.createElement("button");
-    submitButton.textContent="Submit!";
+    submitButton.textContent="Click to submit";
     submitButton.addEventListener("click", scoreSubmission);
     endScreenElement.append(gameOverSubmission);
     endScreenElement.append(nameInput);
